@@ -5,6 +5,7 @@ import club.minnced.discord.webhook.WebhookClientBuilder;
 import me.dratii.data.discord.ConfigData;
 import me.dratii.discord.Comms;
 import me.dratii.discord.Listeners;
+import me.dratii.jobs.FetchPostNLApiKey;
 import me.dratii.jobs.UpdatePackages;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -29,8 +30,8 @@ import static org.quartz.TriggerBuilder.newTrigger;
 public class Main {
     static JobDetail jobTracker;
     static Trigger triggerTracker;
-    static Trigger triggerUpdatePackages;
-    static JobDetail jobUpdatePackages;
+    static Trigger triggerPostNLToken;
+    static JobDetail jobPostNLToken;
 
     public static void main(String[] args) {
         // Move bufferedReader and configData initialization outside the if block for better readability
@@ -57,7 +58,7 @@ public class Main {
         DEFAULT_LOG.info("Initializing...");
         try {
             scheduler = StdSchedulerFactory.getDefaultScheduler();
-        }catch (SchedulerException e) {
+        } catch (SchedulerException e) {
             sendError(String.valueOf(e));
         }
         DEFAULT_LOG.info("Build WebhookClient...");
@@ -83,7 +84,7 @@ public class Main {
         DEFAULT_LOG.info("Scheduling jobs...");
         try {
             scheduler.scheduleJob(jobTracker, triggerTracker);
-            //scheduler.scheduleJob(jobUpdatePackages, triggerUpdatePackages);
+            scheduler.scheduleJob(jobPostNLToken, triggerPostNLToken);
         } catch (SchedulerException e) {
             sendError(String.valueOf(e));
         }
@@ -102,6 +103,7 @@ public class Main {
         jobTracker = newJob(UpdatePackages.class)
                 .withIdentity("Tracker", "TrackerGroup")
                 .build();
+        jobPostNLToken = newJob(FetchPostNLApiKey.class).withIdentity("FetchPostNLApiKey", "TokenFetch").build();
     }
 
     private static void triggerBuilder() {
@@ -112,6 +114,7 @@ public class Main {
                         .withIntervalInHours(1)
                         .repeatForever())
                 .build();
+        triggerPostNLToken = newTrigger().withIdentity("FetchPostNLApiKey", "TokenFetch").startNow().withSchedule(simpleSchedule().withIntervalInHours(24).repeatForever()).build();
 
     }
 }

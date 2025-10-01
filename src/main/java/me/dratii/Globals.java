@@ -25,4 +25,5 @@ public class Globals {
     public static final ComponentLogger CAINIAO_LOG = ComponentLogger.logger("Cainiao");
     public static Data[] currentPackageData;
     public static WebhookClient webhookClient;
+    public static String PostNLApiKey;
 }
