@@ -13,6 +13,7 @@ import me.dratii.handlers.EmbedHandler;
 import me.dratii.tracking.Cainiao;
 import me.dratii.tracking.InPost;
 import me.dratii.tracking.PocztaPolska;
+import me.dratii.tracking.PostNL;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -74,6 +75,24 @@ public class TrackPackages {
 
             if (!newStatus.equals(data.status)) {
                 EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PocztaPolska, data.number, newStatus, newTime, null).build(), data.owner);
+                data.status = newStatus;
+                saveData();
+
+            }
+
+        }
+    }
+    public void PostNL() {
+        for (Data data : currentPackageData) {
+            if (!data.carrier.equals(Carriers.PostNL)) continue;
+            me.dratii.data.tracking.postNL.Data dane = PostNL.getTrackingInfo(data.number);
+            assert dane != null;
+            String newTime = dane.getData().getItems().getFirst().getEvents().getFirst().getDatetimeLocal();
+            String newStatus = dane.getData().getItems().getFirst().getEvents().getFirst().getStatusDescription();
+            String state = dane.getData().getItems().getFirst().getEvents().getFirst().getCategory();
+
+            if (!newStatus.equals(data.status)) {
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, newStatus, newTime, state).build(), data.owner);
                 data.status = newStatus;
                 saveData();
 

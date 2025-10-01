@@ -46,6 +46,9 @@ public class UpdatePackages implements Job {
                 case PocztaPolska:
                     trackPackages.pocztaPolska();
                     break;
+                case PostNL:
+                    trackPackages.PostNL();
+                    break;
                 default:
                     // Handle the default case or throw an exception if necessary
                     System.out.println("Unknown carrier: " + dane.carrier);
