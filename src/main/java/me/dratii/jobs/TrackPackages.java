@@ -69,11 +69,11 @@ public class TrackPackages {
             me.dratii.data.tracking.pocztaPolska.Data dane = PocztaPolska.getTrackingInfo(data.number);
             assert dane != null;
             String newTime = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getTime();
-            String newStatus = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getState().getName();
-            String state = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getState().getCode();
+            String newStatus = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getName();
+            //String state = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getState().getCode();
 
             if (!newStatus.equals(data.status)) {
-                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PocztaPolska, data.number, newStatus, newTime, state).build(), data.owner);
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PocztaPolska, data.number, newStatus, newTime, null).build(), data.owner);
                 data.status = newStatus;
                 saveData();
 

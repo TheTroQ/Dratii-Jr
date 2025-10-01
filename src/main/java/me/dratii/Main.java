@@ -83,7 +83,7 @@ public class Main {
         DEFAULT_LOG.info("Scheduling jobs...");
         try {
             scheduler.scheduleJob(jobTracker, triggerTracker);
-            scheduler.scheduleJob(jobUpdatePackages, triggerUpdatePackages);
+            //scheduler.scheduleJob(jobUpdatePackages, triggerUpdatePackages);
         } catch (SchedulerException e) {
             sendError(String.valueOf(e));
         }
