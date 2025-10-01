@@ -109,7 +109,7 @@ public class Main {
                 .withIdentity("Tracker", "TrackerGroup")
                 .startNow()
                 .withSchedule(simpleSchedule()
-                        .withIntervalInMinutes(10)
+                        .withIntervalInHours(1)
                         .repeatForever())
                 .build();
 

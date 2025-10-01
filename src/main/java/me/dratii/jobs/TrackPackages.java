@@ -51,9 +51,9 @@ public class TrackPackages {
             CainiaoInfo dane = Cainiao.getTrackingInfo(data.number);
 
             assert dane != null;
-            String newDesc = dane.desc();
+            String newDesc = dane.status();
             String newTime = dane.time();
-            String newStatus = dane.status();
+            String newStatus = dane.latestTrace().getDesc();
 
             if (!newStatus.equals(data.status)) {
                 EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.Cainiao, data.number, newStatus, newTime, newDesc).build(), data.owner);

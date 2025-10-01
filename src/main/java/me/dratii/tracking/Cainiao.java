@@ -30,7 +30,7 @@ public class Cainiao {
         try {
             String jsonResponse = makeHttpRequest(url);
             Data data = gson.fromJson(jsonResponse, Data.class);
-            return new CainiaoInfo(data.getModule().getFirst().getStatus(),data.getModule().getFirst().getDaysNumber(),data.getModule().getFirst().getStatusDesc());
+            return new CainiaoInfo(data.getModule().getFirst().getStatus(),data.getModule().getFirst().getDaysNumber(),data.getModule().getFirst().getStatusDesc(),data.getModule().getFirst().getLatestTrace());
         } catch (IOException e) {
             e.printStackTrace();
         }
