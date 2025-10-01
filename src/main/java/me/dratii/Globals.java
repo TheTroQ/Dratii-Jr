@@ -1,5 +1,6 @@
 package me.dratii;
 
+import club.minnced.discord.webhook.WebhookClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.dratii.data.discord.ConfigData;
@@ -23,4 +24,5 @@ public class Globals {
     public static final ComponentLogger INPOST_LOG = ComponentLogger.logger("InPost");
     public static final ComponentLogger CAINIAO_LOG = ComponentLogger.logger("Cainiao");
     public static Data[] currentPackageData;
+    public static WebhookClient webhookClient;
 }

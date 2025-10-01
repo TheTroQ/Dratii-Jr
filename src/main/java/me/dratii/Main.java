@@ -1,6 +1,7 @@
 package me.dratii;
 
 
+import club.minnced.discord.webhook.WebhookClientBuilder;
 import me.dratii.data.discord.ConfigData;
 import me.dratii.discord.Comms;
 import me.dratii.discord.Listeners;
@@ -59,6 +60,10 @@ public class Main {
         }catch (SchedulerException e) {
             sendError(String.valueOf(e));
         }
+        DEFAULT_LOG.info("Build WebhookClient...");
+        WebhookClientBuilder builder = new WebhookClientBuilder(configData.ErrorWebhookURL());
+        webhookClient = builder.build();
+        DEFAULT_LOG.info("WebhookClient built.");
         DEFAULT_LOG.info("Initializing commands...");
         Comms.InitializeCommands();
         DEFAULT_LOG.info("Commands initialized.");
