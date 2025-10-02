@@ -27,12 +27,13 @@ public class EmbedHandler {
                 eb.addField("Carrier: ", String.valueOf(carrier), true);
                 break;
             case PocztaPolska:
-                eb.setColor(Color.red);
+                eb.setColor(Color.white);
                 eb.addField("Carrier: ", String.valueOf(carrier), true);
                 break;
             case PostNL:
                 eb.setColor(Color.orange);
                 eb.addField("Carrier: ", String.valueOf(carrier), true);
+                break;
             case null, default:
                 eb.setColor(Color.cyan);
                 eb.addField("Carrier: ", "Error", true);

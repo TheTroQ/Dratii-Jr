@@ -1,5 +1,13 @@
 plugins {
     id 'java'
+    id("com.gradleup.shadow") version "9.2.2"
+}
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'me.dratii.Main'
+        )
+    }
 }
 
 group = 'me.dratii'
@@ -24,7 +32,6 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.5.18'
     implementation 'net.kyori:adventure-text-logger-slf4j:4.24.0'
     implementation 'org.quartz-scheduler:quartz:2.5.0'
-    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 test {

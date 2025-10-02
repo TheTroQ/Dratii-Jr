@@ -12,6 +12,7 @@ import org.quartz.JobExecutionException;
 import java.io.IOException;
 
 import static me.dratii.Globals.*;
+import static me.dratii.handlers.ErrorHandler.sendError;
 
 public class FetchPostNLApiKey implements Job{
     private static Token GetApiKey() {
@@ -27,7 +28,9 @@ public class FetchPostNLApiKey implements Job{
             return gson.fromJson(response.body().string(), Token.class);
         } catch (IOException e) {
             e.printStackTrace();
+            sendError(e.getMessage());
         }
+        return null;
     }
 
     @Override

@@ -5,8 +5,7 @@ import okhttp3.*;
 
 import java.io.IOException;
 
-import static me.dratii.Globals.client;
-import static me.dratii.Globals.gson;
+import static me.dratii.Globals.*;
 
 public class PostNL {
 
@@ -23,7 +22,7 @@ public class PostNL {
                 .addHeader("Pragma", "no-cache")
                 .addHeader("Cache-Control", "no-cache")
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .addHeader("authorization", "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3NTkzNTI3MTAsImV4cCI6MTc1OTQzOTExMCwiaXNzIjoibG9jYWxob3N0IiwiYXVkIjoibG9jYWxob3N0In0.3Uw0ZllcIa0kaaGRd0eN3H3R7N22zMM2Ic8CfPChJYtY_CS8V0r_K6cvmWXrct2GyikMi0fRUHxgTP4EyEQokA")
+                .addHeader("authorization", "Bearer "+PostNLApiKey)
                 .post(body)
                 .build();
 

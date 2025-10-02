@@ -10,9 +10,8 @@ public class Listeners extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getName().equals("addpackage")) {
-            TrackerFileUpdateHandler.updateFile(new Data(event.getUser().getId(), "TBU", event.getOption("packagenumber").getAsString(), getCarrier(event.getOption("carrier").getAsString()),false));
             event.deferReply(true).queue();
-
+            TrackerFileUpdateHandler.updateFile(new Data(event.getUser().getId(), "TBU", event.getOption("packagenumber").getAsString(), getCarrier(event.getOption("carrier").getAsString()), false));
             event.getHook().sendMessage("Paczka dodana!").queue();
         }
     }
@@ -25,7 +24,7 @@ public class Listeners extends ListenerAdapter {
                 return Carriers.Cainiao;
             case "pocztapolska":
                 return Carriers.PocztaPolska;
-                case "postnl":
+            case "postnl":
                 return Carriers.PostNL;
         }
         return null;
