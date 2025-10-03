@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
+import java.util.Map;
+
 import static me.dratii.Globals.jda;
 
 public class Comms {
@@ -15,7 +17,8 @@ public class Comms {
                                 .addChoice("InPost", "inpost")
                                 .addChoice("Cainiao", "cainiao")
                                 .addChoice("PocztaPolska", "pocztapolska")
-                                .addChoice("PostNL", "postnl"))
+                                .addChoice("PostNL", "postnl")),
+                Commands.slash("removepackage", "Removes a package to the tracking list for your account.")
         ).queue();
     }
 }
