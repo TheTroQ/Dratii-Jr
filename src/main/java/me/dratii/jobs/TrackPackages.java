@@ -2,13 +2,12 @@ package me.dratii.jobs;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import me.dratii.Globals;
 import me.dratii.data.schema.Carriers;
 import me.dratii.data.schema.Data;
+import me.dratii.data.schema.Statuses;
 import me.dratii.data.tracking.cainiao.CainiaoInfo;
 import me.dratii.data.tracking.inPost.InPostInfo;
-import me.dratii.data.tracking.pocztaPolska.Event;
-import me.dratii.data.tracking.pocztaPolska.PocztaPolskaInfo;
+import me.dratii.data.tracking.inPost.InPostStatuses;
 import me.dratii.handlers.EmbedHandler;
 import me.dratii.tracking.Cainiao;
 import me.dratii.tracking.InPost;
@@ -17,7 +16,7 @@ import me.dratii.tracking.PostNL;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
+import java.util.EnumMap;
 
 import static me.dratii.Globals.*;
 import static me.dratii.Globals.gson;
@@ -28,16 +27,18 @@ public class TrackPackages {
 
 
     public void inpost() {
+
         for (Data data : currentPackageData) {
             if (!data.carrier.equals(Carriers.InPost)) continue;
             InPostInfo dane = InPost.getTrackingInfo(data.number);
 
+
             assert dane != null;
             String newTime = dane.tracking_details()[0].datetime();
-            String newStatus = dane.status();
+            String newStatus = InPostStatuses.Status.get(dane.status()).getName();
 
             if (!newStatus.equals(data.status)) {
-                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.InPost, data.number, newStatus, newTime, null).build(), data.owner);
+                        EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.InPost, data.number, newStatus, newTime, null).build(), data.owner);
                 data.status = newStatus;
                 saveData();
 

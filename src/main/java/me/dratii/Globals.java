@@ -2,7 +2,6 @@ package me.dratii;
 
 import club.minnced.discord.webhook.WebhookClient;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import me.dratii.data.discord.ConfigData;
 import me.dratii.data.schema.Data;
 import net.dv8tion.jda.api.JDA;

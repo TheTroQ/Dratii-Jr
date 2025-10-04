@@ -20,7 +20,6 @@ public class FetchPostNLApiKey implements Job{
                 .url("https://postnl.post/api/v1/auth/token")
                 .post(RequestBody.EMPTY)
                 .addHeader("Accept", "application/json")
-                .addHeader("api_key", configData.PocztaPolskaAPIKey())
                 .build();
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);

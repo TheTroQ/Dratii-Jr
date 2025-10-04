@@ -3,6 +3,7 @@ package me.dratii;
 
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import me.dratii.data.discord.ConfigData;
+import me.dratii.data.schema.Statuses;
 import me.dratii.discord.Comms;
 import me.dratii.discord.Listeners;
 import me.dratii.jobs.FetchPostNLApiKey;
@@ -56,6 +57,9 @@ public class Main {
 
     public static void init() {
         DEFAULT_LOG.info("Initializing...");
+        DEFAULT_LOG.info("Initializing commands...");
+        Comms.InitializeCommands();
+        DEFAULT_LOG.info("Commands initialized.");
         try {
             scheduler = StdSchedulerFactory.getDefaultScheduler();
         } catch (SchedulerException e) {
@@ -65,9 +69,6 @@ public class Main {
         WebhookClientBuilder builder = new WebhookClientBuilder(configData.ErrorWebhookURL());
         webhookClient = builder.build();
         DEFAULT_LOG.info("WebhookClient built.");
-        DEFAULT_LOG.info("Initializing commands...");
-        Comms.InitializeCommands();
-        DEFAULT_LOG.info("Commands initialized.");
         DEFAULT_LOG.info("Initializing listeners...");
         jda.addEventListener(new Listeners());
         DEFAULT_LOG.info("Listeners initialized.");

@@ -11,7 +11,7 @@ import static me.dratii.Globals.*;
 import static me.dratii.handlers.ErrorHandler.sendError;
 
 public class RemovePackageHandler {
-    public static void removeFinishedPackages(Data packToRemove) {
+    public static void removeFinishedPackagesByData(Data packToRemove) {
         Data[] data = currentPackageData;
 
         // Create a new JsonArray
@@ -21,9 +21,9 @@ public class RemovePackageHandler {
         for (Data dane : data) {
             JsonObject jsonObject = gson.toJsonTree(dane).getAsJsonObject();
             JsonObject packet = gson.toJsonTree(packToRemove).getAsJsonObject();
-            if (jsonObject.equals(packet)){
+            if (jsonObject.equals(packet)) {
                 jsonArray.remove(jsonObject);
-            }else {
+            } else {
                 jsonArray.add(jsonObject);
             }
         }
@@ -39,5 +39,11 @@ public class RemovePackageHandler {
         } catch (IOException e) {
             sendError(e.getMessage());
         }
+    }
+
+    public static void removeFinishedPackagesByStatus(Data packToRemove) {
+
+
+
     }
 }

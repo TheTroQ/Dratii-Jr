@@ -46,8 +46,7 @@ public class EmbedHandler {
 
         eb.addField("Status:", status, true);
 
-        if (desc == null) {
-        } else {
+        if (!(desc == null)) {
             eb.addField("Description:", desc, true);
         }
 
@@ -61,7 +60,7 @@ public class EmbedHandler {
         try {
             Objects.requireNonNull(jda.getUserById(userID)).openPrivateChannel().flatMap(channel -> channel.sendMessageEmbeds(embed)).queue();
         } catch (Exception e) {
-            sendError(e.getMessage());
+            sendError(e.toString());
         }
     }
 }

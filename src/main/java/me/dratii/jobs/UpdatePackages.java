@@ -35,6 +35,11 @@ public class UpdatePackages implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         loadData();
         for (int i = 0; i < currentPackageData.length; i++) {
+            try {
+                Thread.sleep(Duration.ofMinutes(1).toMillis());
+            } catch (InterruptedException e) {
+                sendError(e.getMessage());
+            }
             Data dane = currentPackageData[i];
             switch (dane.carrier) {
                 case InPost:
@@ -54,11 +59,7 @@ public class UpdatePackages implements Job {
                     System.out.println("Unknown carrier: " + dane.carrier);
                     break;
             }
-            try {
-                Thread.sleep(Duration.ofMinutes(1).toMillis());
-            } catch (InterruptedException e) {
-                sendError(e.getMessage());
-            }
+
         }
 
     }
