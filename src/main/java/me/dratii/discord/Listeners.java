@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static me.dratii.Globals.currentPackageData;
@@ -28,21 +29,23 @@ public class Listeners extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getName().equals("addpackage")) {
-            event.deferReply(true).queue();
+            event.deferReply(false).queue();
             TrackerFileUpdateHandler.updateFile(new Data(event.getUser().getId(), "TBU", event.getOption("packagenumber").getAsString(), getCarrier(event.getOption("carrier").getAsString()), false));
             event.getHook().sendMessage("Paczka dodana!").queue();
         } else if (event.getName().equals("removepackage")) {
             buttonEventType = "removepackage";
             currentPackageData = null;
             updatePackages.loadData();
+            event.deferReply(true).queue();
             List<Button> buttonData = GenerateButtons(currentPackageData, event.getUser().getId());
             if (buttonData.isEmpty()) {
-                event.reply("Nie znaleziono paczek!").queue();
+                event.getHook().editOriginal("Nie znaleziono paczek!").queue();
             } else {
-                event.reply("Click the button to remove the package.")
-                        .addComponents(
+                event.getHook().editOriginal("Click the button to remove the package.")
+                        .setComponents(
                                 ActionRow.of(buttonData))
                         .queue();
+                event.getHook().deleteOriginal().queueAfter(20, TimeUnit.SECONDS);
 
 
             }
@@ -52,9 +55,9 @@ public class Listeners extends ListenerAdapter {
     @Override
     public void onButtonInteraction(ButtonInteractionEvent event) {
         if(Objects.equals(buttonEventType, "removepackage")){
-        event.deferReply(true).queue();
         currentPackageData = null;
         updatePackages.loadData();
+        event.deferReply(true).queue();
         String ButtonID = event.getComponentId();
         AtomicInteger i = new AtomicInteger();
         Arrays.stream(currentPackageData).forEach(data -> {
@@ -78,6 +81,8 @@ public class Listeners extends ListenerAdapter {
                 return Carriers.PocztaPolska;
             case "postnl":
                 return Carriers.PostNL;
+            case "dpd":
+                return Carriers.DPD;
         }
         return null;
     }

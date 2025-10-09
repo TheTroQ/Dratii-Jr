@@ -4,23 +4,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.dratii.data.schema.Carriers;
 import me.dratii.data.schema.Data;
-import me.dratii.data.schema.Statuses;
 import me.dratii.data.tracking.cainiao.CainiaoInfo;
+import me.dratii.data.tracking.dpd.DPDInfo;
+import me.dratii.data.tracking.dpd.DPDStatuses;
 import me.dratii.data.tracking.inPost.InPostInfo;
 import me.dratii.data.tracking.inPost.InPostStatuses;
+import me.dratii.data.tracking.postNL.PostNLStatuses;
 import me.dratii.handlers.EmbedHandler;
-import me.dratii.tracking.Cainiao;
-import me.dratii.tracking.InPost;
-import me.dratii.tracking.PocztaPolska;
-import me.dratii.tracking.PostNL;
+import me.dratii.tracking.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.EnumMap;
+import java.time.LocalDateTime;
 
 import static me.dratii.Globals.*;
-import static me.dratii.Globals.gson;
-import static me.dratii.Globals.packages;
 import static me.dratii.handlers.ErrorHandler.sendError;
 
 public class TrackPackages {
@@ -34,11 +31,11 @@ public class TrackPackages {
 
 
             assert dane != null;
-            String newTime = dane.tracking_details()[0].datetime();
+            String[] newTime = dane.tracking_details()[0].datetime().split("T");
             String newStatus = InPostStatuses.Status.get(dane.status()).getName();
 
             if (!newStatus.equals(data.status)) {
-                        EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.InPost, data.number, newStatus, newTime, null).build(), data.owner);
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.InPost, data.number, InPostStatuses.Status.get(dane.status()).getEmoji() + " " + newStatus, newTime[0] + " " + newTime[1], null).build(), data.owner);
                 data.status = newStatus;
                 saveData();
 
@@ -65,17 +62,18 @@ public class TrackPackages {
 
         }
     }
+
     public void pocztaPolska() {
         for (Data data : currentPackageData) {
             if (!data.carrier.equals(Carriers.PocztaPolska)) continue;
             me.dratii.data.tracking.pocztaPolska.Data dane = PocztaPolska.getTrackingInfo(data.number);
             assert dane != null;
-            String newTime = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getTime();
-            String newStatus = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getName();
+            LocalDateTime newTime = LocalDateTime.parse(dane.mailInfo().getEvents().getFirst().getTime(), czas);
+            String newStatus = dane.mailInfo().getEvents().getFirst().getName();
             //String state = dane.mailInfo().getEvents().get(dane.mailInfo().getEvents().size()-1).getState().getCode();
 
             if (!newStatus.equals(data.status)) {
-                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PocztaPolska, data.number, newStatus, newTime, null).build(), data.owner);
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PocztaPolska, data.number, newStatus, String.valueOf(newTime), null).build(), data.owner);
                 data.status = newStatus;
                 saveData();
 
@@ -83,22 +81,40 @@ public class TrackPackages {
 
         }
     }
+
     public void PostNL() {
         for (Data data : currentPackageData) {
             if (!data.carrier.equals(Carriers.PostNL)) continue;
             me.dratii.data.tracking.postNL.Data dane = PostNL.getTrackingInfo(data.number);
             assert dane != null;
-            String newTime = dane.getData().getItems().getFirst().getEvents().getFirst().getDatetimeLocal();
-            String newStatus = dane.getData().getItems().getFirst().getEvents().getFirst().getStatusDescription();
-            String state = dane.getData().getItems().getFirst().getEvents().getFirst().getCategory();
+            String[] newTime = LocalDateTime.parse(dane.getData().getItems().getFirst().getEvents().getFirst().getDatetimeLocal(), czas).toString().split("T");
+            String category = PostNLStatuses.Status.get(dane.getData().getItems().getFirst().getEvents().getFirst().getCategory()).getName();
+            String status = dane.getData().getItems().getFirst().getEvents().getFirst().getStatusDescription();
 
-            if (!newStatus.equals(data.status)) {
-                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, newStatus, newTime, state).build(), data.owner);
-                data.status = newStatus;
+            if (!status.equals(data.status)) {
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, status, newTime[0] + " " + newTime[1], PostNLStatuses.Status.get(dane.getData().getItems().getFirst().getEvents().getFirst().getCategory()).getEmoji() + " " + category).build(), data.owner);
+                data.status = status;
                 saveData();
 
             }
 
+        }
+    }
+
+    public void DPD() {
+        for (Data data : currentPackageData) {
+            if (!data.carrier.equals(Carriers.DPD)) continue;
+
+            DPDInfo info = DPD.getTrackingInfo(data.number);
+            assert info != null;
+
+
+            if (!info.status().equals(data.status)) {
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.DPD, data.number, DPDStatuses.Status.get(info.status()).getEmoji() + " " + info.status(), info.time(), null).build(), data.owner);
+                data.status = info.status();
+                saveData();
+
+            }
         }
     }
 

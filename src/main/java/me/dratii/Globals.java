@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient;
 import org.quartz.Scheduler;
 
 import java.io.File;
+import java.time.format.DateTimeFormatter;
 
 public class Globals {
     public static Scheduler scheduler;
@@ -25,4 +26,5 @@ public class Globals {
     public static Data[] currentPackageData;
     public static WebhookClient webhookClient;
     public static String PostNLApiKey;
+    public static DateTimeFormatter czas = DateTimeFormatter.ISO_DATE_TIME;
 }

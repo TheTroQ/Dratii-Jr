@@ -34,6 +34,10 @@ public class EmbedHandler {
                 eb.setColor(Color.orange);
                 eb.addField("Carrier: ", String.valueOf(carrier), true);
                 break;
+            case DPD:
+                eb.setColor(Color.red);
+                eb.addField("Carrier: ", String.valueOf(carrier), true);
+                break;
             case null, default:
                 eb.setColor(Color.cyan);
                 eb.addField("Carrier: ", "Error", true);

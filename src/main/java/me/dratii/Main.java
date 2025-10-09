@@ -3,7 +3,6 @@ package me.dratii;
 
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import me.dratii.data.discord.ConfigData;
-import me.dratii.data.schema.Statuses;
 import me.dratii.discord.Comms;
 import me.dratii.discord.Listeners;
 import me.dratii.jobs.FetchPostNLApiKey;
@@ -104,7 +103,9 @@ public class Main {
         jobTracker = newJob(UpdatePackages.class)
                 .withIdentity("Tracker", "TrackerGroup")
                 .build();
-        jobPostNLToken = newJob(FetchPostNLApiKey.class).withIdentity("FetchPostNLApiKey", "TokenFetch").build();
+        jobPostNLToken = newJob(FetchPostNLApiKey.class)
+                .withIdentity("FetchPostNLApiKey", "TokenFetch")
+                .build();
     }
 
     private static void triggerBuilder() {
@@ -115,7 +116,12 @@ public class Main {
                         .withIntervalInHours(1)
                         .repeatForever())
                 .build();
-        triggerPostNLToken = newTrigger().withIdentity("FetchPostNLApiKey", "TokenFetch").startNow().withSchedule(simpleSchedule().withIntervalInHours(24).repeatForever()).build();
+        triggerPostNLToken = newTrigger().withIdentity("FetchPostNLApiKey", "TokenFetch")
+                .startNow().
+                withSchedule(simpleSchedule()
+                        .withIntervalInHours(24)
+                        .repeatForever()).
+                build();
 
     }
 }

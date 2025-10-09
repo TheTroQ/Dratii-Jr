@@ -42,6 +42,9 @@ public class UpdatePackages implements Job {
             }
             Data dane = currentPackageData[i];
             switch (dane.carrier) {
+                case PostNL:
+                    trackPackages.PostNL();
+                    break;
                 case InPost:
                     trackPackages.inpost();
                     break;
@@ -51,8 +54,8 @@ public class UpdatePackages implements Job {
                 case PocztaPolska:
                     trackPackages.pocztaPolska();
                     break;
-                case PostNL:
-                    trackPackages.PostNL();
+                case DPD:
+                    trackPackages.DPD();
                     break;
                 default:
                     // Handle the default case or throw an exception if necessary

@@ -4,12 +4,12 @@ import java.util.EnumMap;
 
 public enum Statuses {
     UNKNOWN(0, "???", ""),
-    INFORMATION_PREPARED(1, "INFORMATION_PREPARED", "📝"),
-    SENT(2, "SENT", "✉️"),
-    IN_TRANSIT(3, "IN_TRANSIT", "🚚"),
-    OUT_FOR_DELIVERY(4, "OUT_FOR_DELIVERY", "🚶"),
-    READY_FOR_PICKUP(5, "READY_FOR_PICKUP", "📦"),
-    DELIVERED(6, "DELIVERED", "✅"),
+    INFORMATION_PREPARED(1, "PRZYGOTOWANO INFORMACJE", "📝"),
+    SENT(2, "WYSŁANO", "✉️"),
+    IN_TRANSIT(3, "W TRANSPORCIE", "🚚"),
+    OUT_FOR_DELIVERY(4, "WYDANO DO DOSTAWY", "🚶"),
+    READY_FOR_PICKUP(5, "GOTOWA DO ODEBRANIA W PUNKCIE", "📦"),
+    DELIVERED(6, "DOSTARCZONA", "✅"),
     FAILURE(7, "FAILURE", "❗");
 
     private final int value;

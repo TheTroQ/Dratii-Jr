@@ -4,5 +4,6 @@ public enum Carriers {
     Cainiao,
     InPost,
     PocztaPolska,
-    PostNL
+    PostNL,
+    DPD
 }
