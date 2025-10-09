@@ -9,6 +9,9 @@ import me.dratii.data.tracking.dpd.DPDInfo;
 import me.dratii.data.tracking.dpd.DPDStatuses;
 import me.dratii.data.tracking.inPost.InPostInfo;
 import me.dratii.data.tracking.inPost.InPostStatuses;
+import me.dratii.data.tracking.postNL.Data__1;
+import me.dratii.data.tracking.postNL.Event;
+import me.dratii.data.tracking.postNL.Item;
 import me.dratii.data.tracking.postNL.PostNLStatuses;
 import me.dratii.handlers.EmbedHandler;
 import me.dratii.tracking.*;
@@ -16,6 +19,9 @@ import me.dratii.tracking.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
 
 import static me.dratii.Globals.*;
 import static me.dratii.handlers.ErrorHandler.sendError;
@@ -86,14 +92,43 @@ public class TrackPackages {
         for (Data data : currentPackageData) {
             if (!data.carrier.equals(Carriers.PostNL)) continue;
             me.dratii.data.tracking.postNL.Data dane = PostNL.getTrackingInfo(data.number);
-            assert dane != null;
-            String[] newTime = LocalDateTime.parse(dane.getData().getItems().getFirst().getEvents().getFirst().getDatetimeLocal(), czas).toString().split("T");
-            String category = PostNLStatuses.Status.get(dane.getData().getItems().getFirst().getEvents().getFirst().getCategory()).getName();
-            String status = dane.getData().getItems().getFirst().getEvents().getFirst().getStatusDescription();
+            String strDt = Optional.ofNullable(dane)
+                    .map(me.dratii.data.tracking.postNL.Data::getData)
+                    .map(Data__1::getItems)
+                    .map(List::getFirst)
+                    .map(Item::getEvents)
+                    .map(List::getFirst)
+                    .map(Event::getDatetimeLocal)
+                    .orElse(null);
+            String strCat = Optional.ofNullable(dane)
+                    .map(me.dratii.data.tracking.postNL.Data::getData)
+                    .map(Data__1::getItems)
+                    .map(List::getFirst)
+                    .map(Item::getEvents)
+                    .map(List::getFirst)
+                    .map(Event::getCategory)
+                    .orElse(null);
+            String strStat = Optional.ofNullable(dane)
+                    .map(me.dratii.data.tracking.postNL.Data::getData)
+                    .map(Data__1::getItems)
+                    .map(List::getFirst)
+                    .map(Item::getEvents)
+                    .map(List::getFirst)
+                    .map(Event::getStatusDescription)
+                    .orElse(null);
+            if (strDt == null || strCat == null || strStat == null)
+                return;
 
-            if (!status.equals(data.status)) {
-                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, status, newTime[0] + " " + newTime[1], PostNLStatuses.Status.get(dane.getData().getItems().getFirst().getEvents().getFirst().getCategory()).getEmoji() + " " + category).build(), data.owner);
-                data.status = status;
+            var parsed = LocalDateTime.parse(strDt, czas);
+            var dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            var timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+            String[] newTime = {parsed.format(dateFormatter), parsed.format(timeFormatter)};
+            String category = PostNLStatuses.Status.get(strCat).getName();
+
+            if (!strStat.equals(data.status)) {
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, strStat, newTime[0] + " " + newTime[1], PostNLStatuses.Status.get(category).getEmoji() + " " + strCat).build(), data.owner);
+                data.status = strStat;
                 saveData();
 
             }
