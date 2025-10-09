@@ -124,10 +124,9 @@ public class TrackPackages {
             var timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
             String[] newTime = {parsed.format(dateFormatter), parsed.format(timeFormatter)};
-            String category = PostNLStatuses.Status.get(strCat).getName();
 
             if (!strStat.equals(data.status)) {
-                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, strStat, newTime[0] + " " + newTime[1], PostNLStatuses.Status.get(category).getEmoji() + " " + strCat).build(), data.owner);
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, strStat, newTime[0] + " " + newTime[1], PostNLStatuses.Status.get(strCat).getEmoji() + " " + strCat).build(), data.owner);
                 data.status = strStat;
                 saveData();
 
