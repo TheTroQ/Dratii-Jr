@@ -8,14 +8,16 @@ public class ConfigData {
     private String ErrorWebhookURL;
     private String PocztaPolskaApiKey;
     private String PostNLApiKey;
+    private String GlsApiKey;
 
-    public ConfigData(String token, String botOwnerId, String debugChannelId, String ErrorWebhookURL, String PocztaPolskaApiKey, String PostNLApiKey) {
+    public ConfigData(String token, String botOwnerId, String debugChannelId, String ErrorWebhookURL, String PocztaPolskaApiKey, String PostNLApiKey, String GLSapikey) {
         this.Token = token;
         this.BotOwnerID = botOwnerId;
         this.DebugChannelID = debugChannelId;
         this.ErrorWebhookURL = ErrorWebhookURL;
         this.PocztaPolskaApiKey = PocztaPolskaApiKey;
         this.PostNLApiKey = PostNLApiKey;
+        this.GlsApiKey = GLSapikey;
     }
 
     public String Token() {
@@ -61,4 +63,8 @@ public class ConfigData {
     public String PostNLApiKey() {return PostNLApiKey;}
 
     public void setPostNLApiKey(String postNLApiKey) {PostNLApiKey = postNLApiKey;}
+
+    public String GLSAPIkey() {return GlsApiKey;}
+
+    public void setPostGLSAPIkey(String Glsapikey) {GlsApiKey = Glsapikey;}
 }

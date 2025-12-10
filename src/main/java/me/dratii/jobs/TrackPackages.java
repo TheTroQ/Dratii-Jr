@@ -7,6 +7,9 @@ import me.dratii.data.schema.Data;
 import me.dratii.data.tracking.cainiao.CainiaoInfo;
 import me.dratii.data.tracking.dpd.DPDInfo;
 import me.dratii.data.tracking.dpd.DPDStatuses;
+import me.dratii.data.tracking.gls.GLSData;
+import me.dratii.data.tracking.gls.GLSstatuses;
+import me.dratii.data.tracking.gls.Info;
 import me.dratii.data.tracking.inPost.InPostInfo;
 import me.dratii.data.tracking.inPost.InPostStatuses;
 import me.dratii.data.tracking.postNL.Data__1;
@@ -148,6 +151,21 @@ public class TrackPackages {
                 data.status = info.status();
                 saveData();
 
+            }
+        }
+    }
+
+    public void GLS() {
+        for (Data data : currentPackageData) {
+            if (!data.carrier.equals(Carriers.DPD)) continue;
+
+            GLSData info = GLS.getTrackingInfo(data.number);
+            assert info != null;
+
+            if (!info.Event().equals(data.status)) {
+                EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.gls, data.number, GLSstatuses.Status.get(info.status()).getEmoji()+" "+ info.Event(),info.Date(), null).build(), data.owner);
+                data.status = info.Event();
+                saveData();
             }
         }
     }

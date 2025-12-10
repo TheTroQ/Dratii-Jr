@@ -57,6 +57,8 @@ public class UpdatePackages implements Job {
                 case DPD:
                     trackPackages.DPD();
                     break;
+                case gls:
+                    trackPackages.GLS();
                 default:
                     // Handle the default case or throw an exception if necessary
                     System.out.println("Unknown carrier: " + dane.carrier);

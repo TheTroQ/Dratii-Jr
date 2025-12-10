@@ -5,5 +5,6 @@ public enum Carriers {
     InPost,
     PocztaPolska,
     PostNL,
-    DPD
+    DPD,
+    gls
 }

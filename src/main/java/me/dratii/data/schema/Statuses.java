@@ -1,7 +1,10 @@
 package me.dratii.data.schema;
 
+import lombok.Getter;
+
 import java.util.EnumMap;
 
+@Getter
 public enum Statuses {
     UNKNOWN(0, "???", ""),
     INFORMATION_PREPARED(1, "PRZYGOTOWANO INFORMACJE", "📝"),
@@ -20,18 +23,6 @@ public enum Statuses {
         this.value = value;
         this.name = name;
         this.emoji = emoji;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmoji() {
-        return emoji;
     }
 
     public static final java.util.Map<Integer, Statuses> valueMap = new java.util.HashMap<>();

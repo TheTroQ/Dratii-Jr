@@ -26,5 +26,6 @@ public class Globals {
     public static Data[] currentPackageData;
     public static WebhookClient webhookClient;
     public static String PostNLApiKey;
+    public static String GLSApiKey;
     public static DateTimeFormatter czas = DateTimeFormatter.ISO_DATE_TIME;
 }
