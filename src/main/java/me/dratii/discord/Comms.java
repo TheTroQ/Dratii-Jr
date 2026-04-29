@@ -16,7 +16,7 @@ public class Comms {
                         .addOptions( new OptionData(OptionType.STRING, "carrier", "The Carrier of the package.", true)
                                 .addChoice("InPost", "inpost")
                                 .addChoice("Cainiao", "cainiao")
-                                .addChoice("PocztaPolska", "pocztapolska")
+                                //.addChoice("PocztaPolska", "pocztapolska")
                                 .addChoice("PostNL", "postnl")
                                 .addChoice("DPD", "dpd")),
                 Commands.slash("removepackage", "Removes a package to the tracking list for your account.")

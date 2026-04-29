@@ -1,21 +1,21 @@
 package me.dratii.jobs;
 
+import static me.dratii.Globals.currentPackageData;
+import static me.dratii.Globals.gson;
+import static me.dratii.handlers.ErrorHandler.sendError;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.time.Duration;
 import me.dratii.Globals;
 import me.dratii.data.schema.Data;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.time.Duration;
-
-import static me.dratii.Globals.currentPackageData;
-import static me.dratii.Globals.gson;
-import static me.dratii.handlers.ErrorHandler.sendError;
-
 public class UpdatePackages implements Job {
+
     TrackPackages trackPackages = new TrackPackages();
 
     public void loadData() {
@@ -32,7 +32,8 @@ public class UpdatePackages implements Job {
 
     //PocztaPolskaInfo info = new PocztaPolskaInfo(data.getMailInfo(),(new PocztaPolskaInfo.info(data.mailInfo().getStates(),data.mailInfo().getEvents())));
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context)
+        throws JobExecutionException {
         loadData();
         for (int i = 0; i < currentPackageData.length; i++) {
             try {
@@ -43,29 +44,27 @@ public class UpdatePackages implements Job {
             Data dane = currentPackageData[i];
             switch (dane.carrier) {
                 case PostNL:
-                    trackPackages.PostNL();
+                    trackPackages.PostNL(dane);
                     break;
                 case InPost:
-                    trackPackages.inpost();
+                    trackPackages.inpost(dane);
                     break;
                 case Cainiao:
-                    trackPackages.cainiao();
+                    trackPackages.cainiao(dane);
                     break;
-                case PocztaPolska:
-                    trackPackages.pocztaPolska();
-                    break;
+                //case PocztaPolska:
+                //    trackPackages.pocztaPolska();
+                //    break;
                 case DPD:
-                    trackPackages.DPD();
+                    trackPackages.DPD(dane);
                     break;
                 case gls:
-                    trackPackages.GLS();
+                    trackPackages.GLS(dane);
                 default:
                     // Handle the default case or throw an exception if necessary
                     System.out.println("Unknown carrier: " + dane.carrier);
                     break;
             }
-
         }
-
     }
 }
