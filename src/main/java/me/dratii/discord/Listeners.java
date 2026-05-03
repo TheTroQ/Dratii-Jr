@@ -30,7 +30,7 @@ public class Listeners extends ListenerAdapter {
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getName().equals("addpackage")) {
             event.deferReply(false).queue();
-            TrackerFileUpdateHandler.updateFile(new Data(event.getUser().getId(), "TBU", event.getOption("packagenumber").getAsString(), getCarrier(event.getOption("carrier").getAsString()), false));
+            TrackerFileUpdateHandler.updateFile(new Data(event.getUser().getId(), "TBU", event.getOption("packagenumber").getAsString(), getCarrier(event.getOption("carrier").getAsString()),event.getOption("name").getAsString(), false));
             event.getHook().sendMessage("Paczka dodana!").queue();
         } else if (event.getName().equals("removepackage")) {
             buttonEventType = "removepackage";

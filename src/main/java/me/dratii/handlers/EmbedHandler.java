@@ -13,9 +13,9 @@ import static me.dratii.handlers.ErrorHandler.sendError;
 public class EmbedHandler {
 
 
-    public static EmbedBuilder TrackingEmbed(Carriers carrier, String number, String status, String date, String desc) {
+    public static EmbedBuilder TrackingEmbed(Carriers carrier, String number, String status, String date, String desc,String friendlyName) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Tracking Update!");
+        eb.setTitle("Tracking Update of "+friendlyName+"!");
 
         switch (carrier) {
             case Cainiao:

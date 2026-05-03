@@ -13,12 +13,13 @@ public class Comms {
         jda.updateCommands().addCommands(
                 Commands.slash("addpackage", "Adds a package to the tracking list for your account.")
                         .addOption(OptionType.STRING, "packagenumber", "Your package number.", true)
-                        .addOptions( new OptionData(OptionType.STRING, "carrier", "The Carrier of the package.", true)
+                        .addOptions(new OptionData(OptionType.STRING, "carrier", "The Carrier of the package.", true)
                                 .addChoice("InPost", "inpost")
                                 .addChoice("Cainiao", "cainiao")
                                 //.addChoice("PocztaPolska", "pocztapolska")
                                 .addChoice("PostNL", "postnl")
-                                .addChoice("DPD", "dpd")),
+                                .addChoice("DPD", "dpd"))
+                        .addOption(OptionType.STRING,"name","Add a friendly name to Your package",true),
                 Commands.slash("removepackage", "Removes a package to the tracking list for your account.")
         ).queue();
     }

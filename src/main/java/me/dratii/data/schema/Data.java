@@ -13,12 +13,15 @@ public class Data {
     public Carriers carrier;
     @Expose
     public boolean finished;
+    @Expose
+    public String friendlyName;
 
-    public Data(String owner, String status, String number, Carriers carrier,boolean finished) {
+    public Data(String owner, String status, String number, Carriers carrier,String friendlyName ,boolean finished) {
         this.carrier = carrier;
         this.number = number;
         this.owner = owner;
         this.status = status;
+        this.friendlyName = friendlyName;
         this.finished = finished;
     }
 }
