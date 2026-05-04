@@ -40,10 +40,4 @@ public class RemovePackageHandler {
             sendError(e.getMessage());
         }
     }
-
-    public static void removeFinishedPackagesByStatus(Data packToRemove) {
-
-
-
-    }
 }

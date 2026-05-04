@@ -11,10 +11,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import me.dratii.data.schema.Carriers;
 import me.dratii.data.schema.Data;
+import me.dratii.data.schema.Statuses;
 import me.dratii.data.tracking.cainiao.CainiaoInfo;
 import me.dratii.data.tracking.dpd.DPDInfo;
 import me.dratii.data.tracking.dpd.DPDStatuses;
@@ -28,6 +30,7 @@ import me.dratii.data.tracking.postNL.Event;
 import me.dratii.data.tracking.postNL.Item;
 import me.dratii.data.tracking.postNL.PostNLStatuses;
 import me.dratii.handlers.EmbedHandler;
+import me.dratii.handlers.RemovePackageHandler;
 import me.dratii.tracking.*;
 
 public class TrackPackages {
@@ -43,6 +46,7 @@ public class TrackPackages {
             EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.InPost, data.number, InPostStatuses.Status.get(dane.status()).getEmoji() + " " + newStatus, newTime[0] + " " + newTime[1], null,data.friendlyName).build(), data.owner);
             data.status = newStatus;
             saveData();
+            removeIfFinished(data);
         }
     }
 
@@ -58,6 +62,7 @@ public class TrackPackages {
             EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.Cainiao, data.number, newStatus, newTime, newDesc, data.friendlyName).build(), data.owner);
             data.status = newStatus;
             saveData();
+            removeIfFinished(data);
         }
     }
 
@@ -97,6 +102,7 @@ public class TrackPackages {
             EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.PostNL, data.number, strStat, newTime[0] + " " + newTime[1], PostNLStatuses.Status.get(strCat).getEmoji() + " " + strCat, data.friendlyName).build(), data.owner);
             data.status = strStat;
             saveData();
+            removeIfFinished(data);
         }
     }
 
@@ -108,6 +114,7 @@ public class TrackPackages {
             EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.DPD, data.number, DPDStatuses.Status.get(info.status()).getEmoji() + " " + info.status(), info.time(), null,data.friendlyName).build(), data.owner);
             data.status = info.status();
             saveData();
+            removeIfFinished(data);
         }
     }
 
@@ -119,6 +126,7 @@ public class TrackPackages {
             EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.gls, data.number, GLSstatuses.Status.get(info.status()).getEmoji() + " " + info.Event(), info.Date(), null,data.friendlyName).build(), data.owner);
             data.status = info.Event();
             saveData();
+            removeIfFinished(data);
         }
     }
 
@@ -144,6 +152,11 @@ public class TrackPackages {
             file.close();
         } catch (IOException e) {
             sendError(e.getMessage());
+        }
+    }
+    private void removeIfFinished(Data data){
+        if(Objects.equals(data.status, Statuses.DELIVERED.getName())){
+            RemovePackageHandler.removeFinishedPackagesByData(data);
         }
     }
 }
