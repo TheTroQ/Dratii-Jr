@@ -29,6 +29,8 @@ import me.dratii.data.tracking.postNL.Data__1;
 import me.dratii.data.tracking.postNL.Event;
 import me.dratii.data.tracking.postNL.Item;
 import me.dratii.data.tracking.postNL.PostNLStatuses;
+import me.dratii.data.tracking.yuntrack.YunTrackInfo;
+import me.dratii.data.tracking.yuntrack.YunTrackStatuses;
 import me.dratii.handlers.EmbedHandler;
 import me.dratii.handlers.RemovePackageHandler;
 import me.dratii.tracking.*;
@@ -128,6 +130,17 @@ public class TrackPackages {
             saveData();
             removeIfFinished(data);
         }
+    }
+
+    public void YunTrack(Data data) {
+        YunTrackInfo info = YunTrack.getTrackingInfo(data.number);
+        assert  info != null;
+
+
+        if(!info.lastTrackEvent().equals(data.status)){
+            EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.yuntrack,data.number, YunTrackStatuses.Status.get(info.lastTrackEvent().getTrackingStatus()).getEmoji() + " " + info.lastTrackEvent().getProcessContent(),info.lastTrackEvent().getProcessDate(),info.lastTrackEvent().getProcessCity(),data.friendlyName).build(),data.owner);
+            data.status = info.lastTrackEvent().getProcessContent();
+        };
     }
 
     private void saveData() {

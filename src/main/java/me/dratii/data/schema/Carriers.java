@@ -6,5 +6,6 @@ public enum Carriers {
     PocztaPolska,
     PostNL,
     DPD,
-    gls
+    gls,
+    yuntrack
 }

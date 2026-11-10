@@ -30,10 +30,10 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.42'
     annotationProcessor 'org.projectlombok:lombok:1.18.42'
     implementation 'com.squareup.okhttp3:okhttp:5.1.0'
-    implementation 'ch.qos.logback:logback-classic:1.5.18'
+    implementation 'ch.qos.logback:logback-classic:1.6.3'
     implementation 'net.kyori:adventure-text-logger-slf4j:4.24.0'
     implementation 'org.quartz-scheduler:quartz:2.5.0'
-    implementation 'org.jsoup:jsoup:1.21.2'
+    implementation 'org.jsoup:jsoup:1.23.2'
 }
 
 test {

@@ -2,69 +2,67 @@ package me.dratii.data.discord;
 
 
 public class ConfigData {
-    private String Token;
-    private String BotOwnerID;
-    private String DebugChannelID;
-    private String ErrorWebhookURL;
-    private String PocztaPolskaApiKey;
-    private String PostNLApiKey;
-    private String GlsApiKey;
+    private String token;
+    private String botOwnerId;
+    private String debugChannelId;
+    private String errorWebhookUrl;
+    private String pocztaPolskaApiKey;
+    private String postNlaApiKey;
+    private String glsApiKey;
+    private String yunTrackHMACKey;
 
-    public ConfigData(String token, String botOwnerId, String debugChannelId, String ErrorWebhookURL, String PocztaPolskaApiKey, String PostNLApiKey, String GLSapikey) {
-        this.Token = token;
-        this.BotOwnerID = botOwnerId;
-        this.DebugChannelID = debugChannelId;
-        this.ErrorWebhookURL = ErrorWebhookURL;
-        this.PocztaPolskaApiKey = PocztaPolskaApiKey;
-        this.PostNLApiKey = PostNLApiKey;
-        this.GlsApiKey = GLSapikey;
+    public ConfigData(String token, String botOwnerId, String debugChannelId, String errorWebhookUrl, String pocztaPolskaApiKey, String postNLApiKey, String glsApiKey, String yunTrackHMACKey) {
+        this.token = token;
+        this.botOwnerId = botOwnerId;
+        this.debugChannelId = debugChannelId;
+        this.errorWebhookUrl = errorWebhookUrl;
+        this.pocztaPolskaApiKey = pocztaPolskaApiKey;
+        this.postNlaApiKey = postNLApiKey;
+        this.glsApiKey = glsApiKey;
+        this.yunTrackHMACKey = yunTrackHMACKey;
     }
 
-    public String Token() {
-        return Token;
-    }
-
-    public void setToken(String token) {
-        Token = token;
-    }
+    public String getToken() { return token; }
 
     public String BotOwnerID() {
-        return BotOwnerID;
+        return botOwnerId;
     }
 
     public void setBotOwnerID(String botOwnerID) {
-        BotOwnerID = botOwnerID;
+        botOwnerId = botOwnerID;
     }
 
     public String DebugChannelID() {
-        return DebugChannelID;
+        return debugChannelId;
     }
 
     public void setDebugChannelID(String debugChannelID) {
-        DebugChannelID = debugChannelID;
+        debugChannelId = debugChannelID;
     }
 
     public String ErrorWebhookURL() {
-        return ErrorWebhookURL;
+        return errorWebhookUrl;
     }
 
     public void setErrorWebhookURL(String errorWebhookURL) {
-        ErrorWebhookURL = errorWebhookURL;
+        errorWebhookURL = errorWebhookURL;
     }
 
     public String PocztaPolskaAPIKey() {
-        return PocztaPolskaApiKey;
+        return pocztaPolskaApiKey;
     }
 
     public void setPocztaPolskaApiKey(String pocztaPolskaApiKey) {
-        PocztaPolskaApiKey = pocztaPolskaApiKey;
+        pocztaPolskaApiKey = pocztaPolskaApiKey;
     }
 
-    public String PostNLApiKey() {return PostNLApiKey;}
+    public String PostNLApiKey() {return postNlaApiKey;}
 
-    public void setPostNLApiKey(String postNLApiKey) {PostNLApiKey = postNLApiKey;}
+    public void setPostNLApiKey(String postNLApiKey) {postNLApiKey = postNLApiKey;}
 
-    public String GLSAPIkey() {return GlsApiKey;}
+    public String GLSAPIkey() {return glsApiKey;}
 
-    public void setPostGLSAPIkey(String Glsapikey) {GlsApiKey = Glsapikey;}
+    public String YunTrackHMACKey() {return yunTrackHMACKey;}
+
+    public void setPostGLSAPIkey(String Glsapikey) {glsApiKey = Glsapikey;}
 }

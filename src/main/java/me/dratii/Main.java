@@ -38,8 +38,18 @@ public class Main {
 
         if (config.exists()) {
             try {
-                Globals.configData = gson.fromJson(new BufferedReader(new FileReader(config)), ConfigData.class);
-                jda = JDABuilder.create(configData.Token(), GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS).setActivity(Activity.competing("mischievous activities")).setStatus(OnlineStatus.ONLINE).disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOJI, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS).build();
+                try (BufferedReader reader = new BufferedReader(new FileReader(config))) {
+                    Globals.configData = gson.fromJson(reader, ConfigData.class);
+                }
+                jda = JDABuilder.create(configData.getToken(),
+                        GatewayIntent.MESSAGE_CONTENT,
+                        GatewayIntent.GUILD_PRESENCES,
+                        GatewayIntent.GUILD_MEMBERS)
+                        .setActivity(
+                                Activity.competing("mischievous activities"))
+                        .setStatus(OnlineStatus.ONLINE)
+                        .disableCache(CacheFlag.VOICE_STATE, CacheFlag.EMOJI, CacheFlag.STICKER, CacheFlag.SCHEDULED_EVENTS)
+                        .build();
                 init();
             } catch (FileNotFoundException e) {
                 DEFAULT_LOG.error("Error reading config file: {}", e.getMessage()); // Use err for errors
@@ -51,6 +61,7 @@ public class Main {
             }
         } else {
             DEFAULT_LOG.info("Config file does not exist.");
+            System.exit(1);
         }
     }
 
@@ -124,4 +135,5 @@ public class Main {
                 build();
 
     }
+
 }
