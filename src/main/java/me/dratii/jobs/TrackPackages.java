@@ -29,6 +29,7 @@ import me.dratii.data.tracking.postNL.Data__1;
 import me.dratii.data.tracking.postNL.Event;
 import me.dratii.data.tracking.postNL.Item;
 import me.dratii.data.tracking.postNL.PostNLStatuses;
+import me.dratii.data.tracking.yuntrack.LastTrackEvent;
 import me.dratii.data.tracking.yuntrack.YunTrackInfo;
 import me.dratii.data.tracking.yuntrack.YunTrackStatuses;
 import me.dratii.handlers.EmbedHandler;
@@ -134,13 +135,18 @@ public class TrackPackages {
 
     public void YunTrack(Data data) {
         YunTrackInfo info = YunTrack.getTrackingInfo(data.number);
-        assert  info != null;
+        if (info == null || info.lastTrackEvent() == null) return;
 
+        LastTrackEvent event = info.lastTrackEvent();
+        String newStatus = event.getProcessContent();
+        if (newStatus == null || newStatus.equals(data.status)) return;
 
-        if(!info.lastTrackEvent().equals(data.status)){
-            EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.yuntrack,data.number, YunTrackStatuses.Status.get(info.lastTrackEvent().getTrackingStatus()).getEmoji() + " " + info.lastTrackEvent().getProcessContent(),info.lastTrackEvent().getProcessDate(),info.lastTrackEvent().getProcessCity(),data.friendlyName).build(),data.owner);
-            data.status = info.lastTrackEvent().getProcessContent();
-        };
+        Statuses status = YunTrackStatuses.Status.getOrDefault(event.getTrackingStatus(), Statuses.UNKNOWN);
+
+        EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.yuntrack, data.number, status.getEmoji() + " " + newStatus, event.getProcessDate(), event.getProcessCity(), data.friendlyName).build(), data.owner);
+        data.status = newStatus;
+        saveData();
+        removeIfFinished(data);
     }
 
     private void saveData() {

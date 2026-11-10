@@ -60,6 +60,10 @@ public class UpdatePackages implements Job {
                     break;
                 case gls:
                     trackPackages.GLS(dane);
+                    break;
+                case yuntrack:
+                    trackPackages.YunTrack(dane);
+                    break;
                 default:
                     // Handle the default case or throw an exception if necessary
                     System.out.println("Unknown carrier: " + dane.carrier);

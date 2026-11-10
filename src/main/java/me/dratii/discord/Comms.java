@@ -18,7 +18,8 @@ public class Comms {
                                 .addChoice("Cainiao", "cainiao")
                                 //.addChoice("PocztaPolska", "pocztapolska")
                                 .addChoice("PostNL", "postnl")
-                                .addChoice("DPD", "dpd"))
+                                .addChoice("DPD", "dpd")
+                                .addChoice("YunTrack", "YT"))
                         .addOption(OptionType.STRING,"name","Add a friendly name to Your package",true),
                 Commands.slash("removepackage", "Removes a package to the tracking list for your account.")
         ).queue();

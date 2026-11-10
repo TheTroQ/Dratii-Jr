@@ -44,7 +44,8 @@ public class EmbedHandler {
                 break;
             case yuntrack:
                 eb.setColor(Color.green);
-                eb.addField("YunTrack: ", String.valueOf(carrier), true);
+                eb.addField("Carrier: ", String.valueOf(carrier), true);
+                break;
             case null, default:
                 eb.setColor(Color.cyan);
                 eb.addField("Carrier: ", "Error", true);

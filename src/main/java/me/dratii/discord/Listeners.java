@@ -83,6 +83,8 @@ public class Listeners extends ListenerAdapter {
                 return Carriers.PostNL;
             case "dpd":
                 return Carriers.DPD;
+            case "YT":
+                return Carriers.yuntrack;
         }
         return null;
     }

@@ -72,6 +72,7 @@ public class YunTrack {
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
+        if (data == null || data.getResultList() == null || data.getResultList().isEmpty()) return null;
         return new YunTrackInfo(data.getResultList().getLast().getTrackInfo().getLastTrackEvent());
     }
 }
