@@ -62,8 +62,7 @@ public class EmbedHandler {
             eb.addField("Description:", desc, true);
         }
 
-
-        eb.setFooter("Powered by love from catboys.network");
+        eb.setFooter("Powered by love from dratii.me","https://cdn.discordapp.com/avatars/341291627509186560/490dda2a7b68c59492e99557d979ba3a.png?size=1024");
 
         return eb;
     }

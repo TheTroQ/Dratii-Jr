@@ -143,7 +143,7 @@ public class TrackPackages {
 
         Statuses status = YunTrackStatuses.Status.getOrDefault(event.getTrackingStatus(), Statuses.UNKNOWN);
 
-        EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.yuntrack, data.number, status.getEmoji() + " " + newStatus, event.getProcessDate(), event.getProcessCity(), data.friendlyName).build(), data.owner);
+        EmbedHandler.SendEmbed(EmbedHandler.TrackingEmbed(Carriers.yuntrack, data.number, status.getEmoji() + " " + newStatus, event.getProcessDate(), null, data.friendlyName).build(), data.owner);
         data.status = newStatus;
         saveData();
         removeIfFinished(data);
